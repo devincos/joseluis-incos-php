@@ -42,7 +42,7 @@ $data = $users->get_usuarios();
             <?php
             endforeach;
             ?>
-            <div class="grid_12" id="agregar"><input type="button" value="Añadir" id="<?=$fila['id']?>" class="agregar"></div>
+            <div class="grid_12" id="agregar"><input type="button" value="Añadir" id="submit" class="agregar"></div>
         </div>
     </div>
 </body>

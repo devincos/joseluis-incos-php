@@ -1,14 +1,20 @@
 <?php
+
 class Users
 {
     private static $instancia;
     private $dbh;
+    private $host = 'localhost';
+    private $db = 'crud_pdo';
+    private $username = 'postgres';
+    private $password = 'postgres';
 
     private function __construct()
     {
+        $dsn = "pgsql:host=".$this->host.";port=5432;dbname=".$this->db.";user=".$this->username.";password=".$this->password;
+
         try {
-            $this->dbh = new PDO('mysql:host=localhost;dbname=crud_pdo', 'root', '');
-            $this->dbh->exec("SET CHARACTER SET utf8");
+            $this->dbh = new PDO($dsn);
         } catch (PDOException $e) {
             print "Error!: " . $e->getMessage();
             die();
@@ -31,7 +37,7 @@ class Users
             $query->execute();
             return $query->fetchAll();
             $this->dbh = null;
-        }catch (PDOException $e) {
+        } catch (PDOException $e) {
             $e->getMessage();
         }
     }
@@ -48,7 +54,7 @@ class Users
         }
     }
 
-    public function insert_usuario($nombre,$email,$registro)
+    public function insert_usuario($nombre, $email, $registro)
     {
         try {
             $query = $this->dbh->prepare('insert into users values(null,?,?,?)');
@@ -62,7 +68,7 @@ class Users
         }
     }
 
-    public function update_usuario($id,$nombre,$email,$fecha)
+    public function update_usuario($id, $nombre, $email, $fecha)
     {
         try {
             $query = $this->dbh->prepare('update users SET nombre = ?, email = ?, registro = ? WHERE id = ?');
@@ -82,4 +88,5 @@ class Users
         trigger_error('La clonación no es permitida!.', E_USER_ERROR);
     }
 }
+
 ?>
